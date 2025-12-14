@@ -10,10 +10,13 @@
     'category': 'Uncategorized',
     'version': '0.1',
 
-    'depends': ['base' , 'report_search'],
+    'depends': ['base' ,  'product'],
 
     'data': [
         'views/res_config_settings.xml',
+        'views/product_product.xml',
     ],
+
+
 
 }

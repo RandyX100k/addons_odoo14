@@ -10,7 +10,7 @@
     'category': 'Uncategorized',
     'version': '0.1',
 
-    'depends': ['base' ,  'product'],
+    'depends': ['base' , 'report_search','bitodoo_product_attr' ,'product'],
 
     'data': [
         'views/res_config_settings.xml',

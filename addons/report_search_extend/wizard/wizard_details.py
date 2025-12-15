@@ -108,7 +108,7 @@ class SaleOrderLineDetailWizard(models.TransientModel):
 
             html += """
                     </tbody>
-                </table>  v
+                </table>
             </div>
             """
 

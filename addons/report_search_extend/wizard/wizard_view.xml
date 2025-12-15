@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="sale_order_line_detail_wizard_view" model="ir.ui.view">
+        <field name="name">sale.order.line.detail.wizard.form</field>
+        <field name="model">sale.order.line.detail.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Detalle del Producto">
+                <group>
+                    <field name="product_template_id"/>
+                </group>
+
+                <group>
+                    <field name="detail_html" widget="html" readonly="1"/>
+                </group>
+
+                <footer>
+                    <button string="Cerrar"
+                            class="btn-primary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

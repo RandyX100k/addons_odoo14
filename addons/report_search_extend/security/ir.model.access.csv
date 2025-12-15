@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_order_line_detail_wizard_user,sale.order.line.detail.wizard user,model_sale_order_line_detail_wizard,base.group_user,1,0,1,0

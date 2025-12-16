@@ -2,7 +2,7 @@
 <templates>
     <t t-name="sale_line_detail_widget.detail_icon">
         <div t-att-class="!widget.data.display_detail_widget ? 'invisible' : ''">
-            <a class="fa fa-arrow-right"
+            <a class="fa fa-info-circle"
                title="Detalle del producto"
                style="cursor:pointer"/>
         </div>

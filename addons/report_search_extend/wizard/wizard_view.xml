@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+
     <record id="sale_order_line_detail_wizard_view" model="ir.ui.view">
         <field name="name">sale.order.line.detail.wizard.form</field>
         <field name="model">sale.order.line.detail.wizard</field>
         <field name="arch" type="xml">
             <form string="Detalle del Producto">
                 <group>
-                    <field name="product_template_id"/>
+                    <field name="product_id"/>
                 </group>
 
                 <group>
@@ -21,4 +22,13 @@
             </form>
         </field>
     </record>
+
+
+    <record id="action_sale_line_detail_wizard" model="ir.actions.act_window">
+        <field name="name">Detalle del Producto</field>
+        <field name="res_model">sale.order.line.detail.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
 </odoo>

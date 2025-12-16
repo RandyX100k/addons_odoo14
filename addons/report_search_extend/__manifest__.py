@@ -16,10 +16,12 @@
         'views/res_config_settings.xml',
         'views/product_product.xml',
         'views/sale_order.xml',
+        'views/assets.xml',
         'wizard/wizard_view.xml',
         'security/ir.model.access.csv',
     ],
 
+     "qweb": ["static/src/xml/widget_order.xml"],
 
 
 }

@@ -6,8 +6,8 @@ class SaleOrderLineDetailWizard(models.TransientModel):
     _name = 'sale.order.line.detail.wizard'
     _description = 'Detalle de Producto'
 
-    product_template_id = fields.Many2one(
-        'product.template',
+    product_id = fields.Many2one(
+        'product.product',
         string='Producto',
         readonly=True
     )
@@ -22,14 +22,14 @@ class SaleOrderLineDetailWizard(models.TransientModel):
     def default_get(self, fields_list):
         res = super().default_get(fields_list)
 
-        product_tmpl_id = self.env.context.get('default_product_template_id')
-        if not product_tmpl_id:
+        product_id = self.env.context.get('default_product_id')
+        if not product_id:
             raise UserError("No se pudo determinar el producto.")
 
-        res['product_template_id'] = product_tmpl_id
+        res['product_id'] = product_id
         return res
 
-    @api.depends('product_template_id')
+    @api.depends('product_id')
     def _compute_detail_html(self):
         Warehouse = self.env['stock.warehouse']
         Pricelist = self.env['product.pricelist']
@@ -39,16 +39,14 @@ class SaleOrderLineDetailWizard(models.TransientModel):
         pricelists = Pricelist.search([])
 
         for wiz in self:
-            tmpl = wiz.product_template_id
-            if not tmpl:
+            if not wiz.product_id:
                 wiz.detail_html = ""
                 continue
 
-            product = tmpl.product_variant_id
+            product = wiz.product_id
 
-            html = f"""
+            html = """
             <div class="o_boxed">
-
                 <h4>Precios por Lista</h4>
                 <table class="table table-sm table-bordered">
                     <thead>
@@ -91,7 +89,6 @@ class SaleOrderLineDetailWizard(models.TransientModel):
 
             for wh in warehouses:
                 location = wh.lot_stock_id
-
                 qty = sum(
                     Quant.search([
                         ('product_id', '=', product.id),

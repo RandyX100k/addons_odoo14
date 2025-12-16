@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<odoo>
+    <template
+        id="assets_backend_order"
+        name="sale stock assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/report_search_extend/static/src/js/widget_order.js"
+            />
+        </xpath>
+    </template>
+</odoo>

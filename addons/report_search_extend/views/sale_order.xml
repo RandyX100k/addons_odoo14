@@ -6,11 +6,19 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
 
+            <xpath expr="//field[@name='order_line']/form" position="inside">
+                <field name="display_detail_widget" invisible="1"/>
+            </xpath>
+
             <xpath expr="//field[@name='order_line']/tree" position="inside">
-                <button name="view_details"
-                        type="object"
-                        string="Detalle"
-                        icon="fa-info-circle"/>
+                <field name="display_detail_widget" invisible="1"/>
+            </xpath>
+
+            <xpath
+                expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']"
+                position="after"
+            >
+                <widget name="sale_line_detail_widget" width="20px"/>
             </xpath>
 
         </field>

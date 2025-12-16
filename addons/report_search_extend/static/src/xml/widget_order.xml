@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="sale_line_detail_widget.detail_icon">
+        <div t-att-class="!widget.data.display_detail_widget ? 'invisible' : ''">
+            <a class="fa fa-arrow-right"
+               title="Detalle del producto"
+               style="cursor:pointer"/>
+        </div>
+    </t>
+</templates>

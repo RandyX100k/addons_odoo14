@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <template id="sheily_invoice">
+  <t t-call="web.html_container">
+    <t t-foreach="docs" t-as="order">
+      <div class="page"
+           style="width:80mm;
+                  padding:5mm;
+                  padding-bottom:12mm;
+                  font-family:monospace;
+                  font-size:11px;
+                  line-height:1.25;">
+
+        <div style="margin-bottom:2mm;">
+          <div>TICKET No. : <t t-esc="order.name"/></div>
+          <div>FECHA : <t t-esc="order.date_order.strftime('%d/%m/%Y')"/></div>
+          <div>CLIENTE : <t t-esc="(order.partner_id.name or '').upper()"/></div>
+        </div>
+
+        <div style="border-bottom:1px dashed #000; margin:2mm 0;"></div>
+
+        <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+          <thead>
+            <tr>
+              <th style="text-align:left; width:6mm;">#</th>
+              <th style="text-align:left; width:18mm;">CODIGO</th>
+                <th style="text-align:left; width:18mm;">DESCRIP.</th>
+
+              <th style="text-align:right; width:18mm;"></th>
+            </tr>
+            <tr>
+              <th style="text-align:left; width:6mm;"></th>
+              <th style="text-align:left; width:18mm;">CANT.</th>
+
+              <th style="text-align:right; width:18mm;">P.UNIT.</th>
+              <th style="text-align:right; width:18mm;">IMPORTE</th>
+            </tr>
+            <tr>
+              <th style="text-align:left; width:6mm;"></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+        </table>
+
+        <div style="border-bottom:1px dashed #000; margin:2mm 0;"></div>
+
+        <t t-set="n" t-value="0"/>
+
+        <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+          <tbody>
+            <t t-foreach="order.order_line" t-as="line">
+              <t t-set="n" t-value="n + 1"/>
+
+              <tr>
+                <td style="width:6mm;"></td>
+                <td style="width:18mm; white-space:nowrap; overflow:hidden;">
+                  <t t-esc="line.product_id.default_code or ''"/>
+                </td>
+                <td colspan="2" style="white-space:nowrap; overflow:hidden;">
+                  <t t-esc="(line.product_id.name or '').upper()"/>
+                </td>
+              </tr>
+
+             <tr>
+                  <td style="width:8mm; text-align:center; white-space:nowrap;">
+                    [<t t-esc="n"/>]
+                  </td>
+
+                  <!-- AQUÍ el arreglo: padding-left -->
+                  <td style="width:18mm; text-align:left; white-space:nowrap; padding-left:12px;">
+                    <t t-esc="'%.2f' % line.product_uom_qty"/>
+                    <t t-esc="(line.product_uom.name or '')[:2].upper()"/>
+                  </td>
+
+                  <td style="width:18mm; text-align:right; white-space:nowrap;">
+                    <t t-esc="'%.2f' % line.price_unit"/>
+                  </td>
+
+                  <td style="width:18mm; text-align:right; white-space:nowrap;">
+                    <t t-esc="'%.2f' % line.price_subtotal"/>
+                  </td>
+             </tr>
+
+            </t>
+          </tbody>
+        </table>
+
+        <div style="border-bottom:1px solid #000; margin:2mm 0;"></div>
+
+        <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+          <tr>
+            <td style="text-align:left; width:26mm;">TOTAL :</td>
+            <td style="text-align:left; width:10mm;">S/</td>
+            <td style="text-align:right;">
+              <t t-esc="'%.2f' % order.amount_total"/>
+            </td>
+          </tr>
+        </table>
+
+        <div style="border-bottom:1px dashed #000; margin:2mm 0;"></div>
+
+        <div style="margin-top:2mm;">
+          <div style="display:flex; justify-content:space-between;">
+            <div>VEND. : <t t-esc="order.user_id.name"/></div>
+            <div>HRA. <t t-esc="order.date_order.strftime('%H:%M:%S')"/></div>
+          </div>
+        </div>
+
+        <div style="margin-top:6mm; font-size:10px;">
+          * TODO CAMBIO SE EFECTUARÁ PRESENTANDO SU<br/>
+          COMPROBANTE Y PRODUCTO EN BUEN ESTADO.<br/>
+          REVISAR SU MERCADERIA ANTES DE RETIRARSE
+        </div>
+
+
+        <div style="margin-top:6mm; text-align:center;">
+          GRACIAS POR SU PREFERENCIA !!!!
+        </div>
+
+      </div>
+    </t>
+  </t>
+</template>
+
+
+
+    <report
+            id="report_80mm"
+            model="sale.order"
+            string="Ticket 80mm"
+            report_type="qweb-pdf"
+            name="report_invoice.sheily_invoice"
+            file="report_invoice.sheily_invoice"
+            attachment_use="True"/>
+
+        <record id="paperformat_ticket_sheily" model="report.paperformat">
+            <field name="name">Ticket PDF</field>
+            <field name="default" eval="False"/>
+            <field name="format">custom</field>
+            <field name="page_height">200</field>
+            <field name="page_width">80</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">0</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+            <field name="report_ids" eval="[(6,0,[ref('report_invoice.report_80mm')])]"/>
+        </record>
+
+
+</odoo>

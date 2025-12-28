@@ -10,18 +10,19 @@
     'category': 'Uncategorized',
     'version': '0.1',
 
-    'depends': ['base' , 'report_search','bitodoo_product_attr' ,'product' , 'stock'],
+    'depends': ['base' ,  'product' , 'sale_management','stock'],
 
     'data': [
         'views/res_config_settings.xml',
-        'views/product_product.xml',
         'views/sale_order.xml',
         'views/assets.xml',
         'wizard/wizard_view.xml',
-        'security/ir.model.access.csv',
+        'security/ir.model.access.csv'
+        # 'views/product_product.xml',
     ],
 
-     "qweb": ["static/src/xml/widget_order.xml"],
+    "qweb": ["static/src/xml/widget_order.xml"],
+
 
 
 }

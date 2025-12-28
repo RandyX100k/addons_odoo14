@@ -13,3 +13,12 @@ class SaleOrderLine(models.Model):
     def _onchange_display_detail_widget(self):
         for line in self:
             line.display_detail_widget = bool(line.product_id)
+
+
+
+
+class SaleOrder(models.Model):
+    _inherit = "sale.order"
+
+
+    resumen_html = fields.Html()

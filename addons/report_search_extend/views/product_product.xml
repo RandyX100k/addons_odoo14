@@ -1,36 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <record id="product_product_tree_view_optional_fields" model="ir.ui.view">
-        <field name="name">product.product.tree.optional.fields</field>
+    <record id="product_product_tree_view_view_inherit_rq" model="ir.ui.view">
+        <field name="name">product.product.view.tree.inherit.rq</field>
         <field name="model">product.product</field>
-        <field name="inherit_id" ref="product.product_product_tree_view" />
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
         <field name="arch" type="xml">
-
-            <xpath expr="//field[@name='nro_motor']" position="attributes">
-                <attribute name="optional">hide</attribute>
+            <xpath expr="//tree" position="inside">
+                <field name="nro_motor" optional="hide"/>
+                <field name="nro_chasis" optional="hide"/>
+                <field name="modelo" optional="hide"/>
+                <field name="colores" optional="hide"/>
+                <field name="nro_dua" optional="hide"/>
+                <field name="qty_available" optional="hide"/>
             </xpath>
-
-            <xpath expr="//field[@name='nro_chasis']" position="attributes">
-                <attribute name="optional">hide</attribute>
-            </xpath>
-
-            <xpath expr="//field[@name='modelo']" position="attributes">
-                <attribute name="optional">hide</attribute>
-            </xpath>
-
-            <xpath expr="//field[@name='colores']" position="attributes">
-                <attribute name="optional">hide</attribute>
-            </xpath>
-
-            <xpath expr="//field[@name='nro_dua']" position="attributes">
-                <attribute name="optional">hide</attribute>
-            </xpath>
-
-            <xpath expr="//field[@name='qty_available']" position="attributes">
-                <attribute name="optional">hide</attribute>
-            </xpath>
-
         </field>
     </record>
 

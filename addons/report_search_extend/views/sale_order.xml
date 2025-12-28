@@ -7,11 +7,11 @@
         <field name="arch" type="xml">
 
             <xpath expr="//field[@name='order_line']/form" position="inside">
-                <field name="display_detail_widget" invisible="1"/>
+                <field name="display_detail_widget" invisible="1" force_save="1"/>
             </xpath>
 
             <xpath expr="//field[@name='order_line']/tree" position="inside">
-                <field name="display_detail_widget" invisible="1"/>
+                <field name="display_detail_widget" invisible="1" force_save="1" />
             </xpath>
 
             <xpath
@@ -21,6 +21,15 @@
                 <widget name="sale_line_detail_widget" width="20px"/>
             </xpath>
 
+
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']"
+                   position="attributes">
+                <attribute name="context">
+                    {'order_id': parent.id}
+                </attribute>
+            </xpath>
+
         </field>
     </record>
 </odoo>
+

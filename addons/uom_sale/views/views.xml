@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <record id="packings_product_inherit" model="ir.ui.view">
+        <field name="name">packing_product_inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Paquetes">
+                    <field name="packing_ids">
+                        <tree editable="bottom">
+                            <field name="packing_name"/>
+                            <field name="price_packing"/>
+                            <field name="price_min_discount" />
+	                        <field name="min_qty" />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+
+<!--    <record id="packing_sale_order_inherit" model="ir.ui.view">-->
+<!--        <field name="name">packing_sale_order_inherit</field>-->
+<!--        <field name="model">sale.order</field>-->
+<!--        <field name="inherit_id" ref="sale.view_order_form"/>-->
+<!--        <field name="arch" type="xml">-->
+
+<!--            <xpath expr="//field[@name='order_line']/tree" position="inside">-->
+
+<!--                <field name="packing_enable" invisible=""/>-->
+<!--            </xpath>-->
+
+<!--        </field>-->
+<!--    </record>-->
+
+</odoo>

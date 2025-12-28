@@ -27,15 +27,14 @@ class ProductProduct(models.Model):
         products = self.search(domain, limit=limit)
 
 
-        order_id = self.env.context.get('order_id')
-        if not order_id:
+        warehouse_id = self.env.context.get('warehouse_id')
+        if not warehouse_id:
             return products.name_get()
 
-        order = self.env['sale.order'].browse(order_id)
-        if not order.exists() or not order.warehouse_id:
-            return products.name_get()
 
-        location = order.warehouse_id.lot_stock_id
+        warehouse_id_search = self.env["stock.warehouse"].browse(warehouse_id)
+
+        location = warehouse_id_search.lot_stock_id
 
         quants = self.env['stock.quant'].read_group(
             domain=[
@@ -50,6 +49,8 @@ class ProductProduct(models.Model):
             q['product_id'][0]: q['quantity']
             for q in quants
         }
+
+
 
         result = []
         for product in products:

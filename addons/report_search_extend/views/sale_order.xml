@@ -3,11 +3,11 @@
     <record id="sale_order_line_button_details" model="ir.ui.view">
         <field name="name">sale.order.line.button.details</field>
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
 
             <xpath expr="//field[@name='order_line']/form" position="inside">
-                <field name="display_detail_widget" invisible="1" force_save="1" />
+                <field name="display_detail_widget" invisible="1" force_save="1"/>
             </xpath>
 
             <xpath expr="//field[@name='order_line']/tree" position="inside">
@@ -18,17 +18,18 @@
                 expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']"
                 position="after"
             >
-                <widget name="sale_line_detail_widget" width="20px" />
+                <widget name="sale_line_detail_widget" width="20px"/>
             </xpath>
 
 
-            <!-- <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']"
-                position="attributes">
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']"
+                   position="attributes">
                 <attribute name="context">
-                    {'order_id': parent.id}
+                    {'warehouse_id': warehouse_id }
                 </attribute>
-            </xpath> -->
+            </xpath>
 
         </field>
     </record>
 </odoo>
+

@@ -27,35 +27,35 @@ class ProductProduct(models.Model):
 
         products = self.search(domain, limit=limit)
 
-        # warehouse_id = self.env.context.get('warehouse_id')
-        # if not warehouse_id:
-        #     return products.name_get()
-        #
-        # warehouse_id_search = self.env["stock.warehouse"].browse(warehouse_id)
-        # location = warehouse_id_search.lot_stock_id
-        #
-        # quants = self.env['stock.quant'].read_group(
-        #     domain=[
-        #         ('product_id', 'in', products.ids),
-        #         ('location_id', 'child_of', location.id),
-        #     ],
-        #     fields=['product_id', 'quantity:sum'],
-        #     groupby=['product_id'],
-        # )
-        #
-        # qty_by_product = {
-        #     q['product_id'][0]: q['quantity']
-        #     for q in quants
-        # }
-        # ================================
+        warehouse_id = self.env.context.get('warehouse_id')
+        if not warehouse_id:
+            return products.name_get()
+
+        warehouse = self.env["stock.warehouse"].browse(warehouse_id)
+        location = warehouse.lot_stock_id
+
+        # Get quantities grouped by product
+        quants = self.env['stock.quant'].read_group(
+            domain=[
+                ('product_id', 'in', products.ids),
+                ('location_id', 'child_of', location.id),
+            ],
+            fields=['product_id', 'quantity:sum'],
+            groupby=['product_id'],
+        )
+
+        qty_by_product = {
+            q['product_id'][0]: q['quantity']
+            for q in quants
+        }
 
         result = []
         for product in products:
+            qty = qty_by_product.get(product.id, 0.0)
             if product.default_code:
-                display = f"{product.name}"
+                display = f"[{product.default_code}] {product.name} ({qty:.2f} {product.uom_id.name})"
             else:
-                display = product.name
-
+                display = f"{product.name} ({qty:.2f} uds)"
             result.append((product.id, display))
 
         return result

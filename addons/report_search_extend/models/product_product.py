@@ -1,4 +1,5 @@
-from  odoo import  models , api
+from odoo import models, api
+
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
@@ -19,44 +20,42 @@ class ProductProduct(models.Model):
             )
 
         domain = [
-                     '|',
-                     ('name', operator, name),
-                     ('default_code', operator, name),
-                 ] + args
+            '|',
+            ('name', operator, name),
+            ('default_code', operator, name),
+        ] + args
 
         products = self.search(domain, limit=limit)
 
-
-        warehouse_id = self.env.context.get('warehouse_id')
-        if not warehouse_id:
-            return products.name_get()
-
-
-        warehouse_id_search = self.env["stock.warehouse"].browse(warehouse_id)
-
-        location = warehouse_id_search.lot_stock_id
-
-        quants = self.env['stock.quant'].read_group(
-            domain=[
-                ('product_id', 'in', products.ids),
-                ('location_id', 'child_of', location.id),
-            ],
-            fields=['product_id', 'quantity:sum'],
-            groupby=['product_id'],
-        )
-
-        qty_by_product = {
-            q['product_id'][0]: q['quantity']
-            for q in quants
-        }
-
-
+        # warehouse_id = self.env.context.get('warehouse_id')
+        # if not warehouse_id:
+        #     return products.name_get()
+        #
+        # warehouse_id_search = self.env["stock.warehouse"].browse(warehouse_id)
+        # location = warehouse_id_search.lot_stock_id
+        #
+        # quants = self.env['stock.quant'].read_group(
+        #     domain=[
+        #         ('product_id', 'in', products.ids),
+        #         ('location_id', 'child_of', location.id),
+        #     ],
+        #     fields=['product_id', 'quantity:sum'],
+        #     groupby=['product_id'],
+        # )
+        #
+        # qty_by_product = {
+        #     q['product_id'][0]: q['quantity']
+        #     for q in quants
+        # }
+        # ================================
 
         result = []
         for product in products:
-            qty = qty_by_product.get(product.id, 0.0)
-            result.append(
-                (product.id, f"{product.display_name} (Stock: {int(qty)})")
-            )
+            if product.default_code:
+                display = f"{product.name}"
+            else:
+                display = product.name
+
+            result.append((product.id, display))
 
         return result

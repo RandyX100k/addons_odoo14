@@ -17,7 +17,7 @@
         'views/sale_order.xml',
         'views/assets.xml',
         'wizard/wizard_view.xml',
-        'security/ir.model.access.csv'
+        'security/ir.model.access.csv',
         'views/product_product.xml',
     ],
 

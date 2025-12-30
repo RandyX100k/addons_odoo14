@@ -59,3 +59,38 @@ class ProductProduct(models.Model):
             result.append((product.id, display))
 
         return result
+
+
+
+class ProductTemplate(models.Model):
+    _inherit = "product.template"
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        args = args or []
+
+        search_native = self.env['ir.config_parameter'].sudo().get_param(
+            'report_search_extend.search_native'
+        )
+
+        if not search_native or search_native == 'False':
+            return super(ProductTemplate, self).name_search(
+                name=name, args=args, operator=operator, limit=limit
+            )
+
+        domain = [
+            '|',
+            ('name', operator, name),
+            ('default_code', operator, name),
+        ] + args
+
+        templates = self.search(domain, limit=limit)
+
+        result = []
+        for tmpl in templates:
+            ref = f"[{tmpl.default_code}] " if tmpl.default_code else ""
+            display = f"{ref}{tmpl.name}"
+            
+            result.append((tmpl.id, display))
+
+        return result

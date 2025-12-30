@@ -34,7 +34,6 @@ class ProductProduct(models.Model):
         warehouse = self.env["stock.warehouse"].browse(warehouse_id)
         location = warehouse.lot_stock_id
 
-        # Get quantities grouped by product
         quants = self.env['stock.quant'].read_group(
             domain=[
                 ('product_id', 'in', products.ids),
@@ -63,10 +62,10 @@ class ProductProduct(models.Model):
 
 
 class ProductTemplate(models.Model):
-    _inherit = "product.template"
+    _inherit = "product.product"
 
     @api.model
-    def name_search(self, name='', args=None, operator='ilike', limit=100):
+    def _name_search(self, name='', args=None, operator='ilike', limit=100):
         args = args or []
 
         search_native = self.env['ir.config_parameter'].sudo().get_param(

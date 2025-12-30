@@ -60,14 +60,16 @@ class ProductProduct(models.Model):
         return result
 
 
-    
     @api.model
     def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
         args = args or []
         domain = []
         if name:
-            domain = ['|', '|', '|', '|', ('name', operator, name), ('nro_chasis', operator, name),
-                      ('nro_motor', operator, name), ('default_code', operator, name)]
+            domain = ['|', '|', '|',
+                    ('name', operator, name),
+                    ('nro_chasis', operator, name),
+                    ('nro_motor', operator, name),
+                    ('default_code', operator, name)]
         return self._search(domain + args, limit=limit, access_rights_uid=name_get_uid)
 
 
